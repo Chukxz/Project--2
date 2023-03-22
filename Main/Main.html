@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Which fills first?</title>
+    <link rel="stylesheet" href="Main.css">
+</head>
+
+<body id="body">
+    <style>
+        .-btn-place {
+            z-index: 3;
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0);
+        }
+        
+        .btn-fill {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            transition: width 0.5s, height 0.5s;
+            z-index: 1;
+            background-color: cyan;
+        }
+        
+        .btn-txt {
+            position: relative;
+            transition: 0.5s;
+            color: gray;
+            width: fit-content;
+            background-color: inherit;
+        }
+    </style>
+
+    <div id="firstfloat">
+        <div id="maindiv">
+            <canvas id="maindivcanvas"></canvas>
+        </div>
+
+        <div id="overaldesc">
+            <div id="secdiv">
+                <img id="myimg"></img>
+            </div>
+            <div id="btngroup">
+                <button id="left" class="-btn">
+                    <div class="btn-fill"></div>
+                    <div class="btn-txt">&lt;</div>
+                </button>
+                <div class='-btn-place'></div>
+                <button id="click" class="-btn">
+                    <div class="btn-fill"></div>
+                    <div class="btn-txt">Add Image(s)</div>
+                </button>
+                <div class='-btn-place'></div>
+                <button id="right" class="-btn">
+                    <div class="btn-fill"></div>
+                    <div class="btn-txt">&gt;</div>
+                </button>
+                <div class='-btn-place'></div>
+                <input type="color" value='#808080' id="inputs">
+            </div>
+        </div>
+    </div>
+
+    <div id="secondfloat">
+        <div id="colorsliders">
+            <div id="numgroup">
+                <label for="range2" id='thisdiv1'>
+                <span>Num:&ThinSpace;</span><span id='spec'></span>
+            </label>
+                <input type="range" name="range2" class="ranges" value="10" min="1" max="100" id="range2">
+            </div>
+            <div id="opacitygroup">
+                <span id="thisdiv2">
+                    <label for="range1" id="firstlabel">Opacity&colon;</label>
+                </span>
+                <span id="label1" class="label"></span>
+                <input type="range" class="ranges" value="100" min="0" max="100" name='range1' id="range1"></span>
+            </div>
+
+        </div>
+
+        <div id="container">
+            <p id="imgwt">Image width:</p><input type="number" id="imgwidth">
+            <p id="imght">Image height:</p><input type="number" id="imgheight">
+            <p id="canvaswt">Canvas width:</p><input type="number" id=canvaswidth>
+            <p id="canvasht'">Canvas height:</p><input type="number" id="canvasheight">
+            </span>
+        </div>
+
+        <script>
+            var ww = window.innerWidth,
+                wh = window.innerHeight,
+                img = document.querySelector('#myimg'),
+                cl = document.querySelector('#colorsliders'),
+                click = document.querySelector('#click'),
+                ff = document.querySelector('#firstfloat'),
+                sf = document.querySelector('#secondfloat'),
+                btng = document.querySelector('#btngroup'),
+                canvas = document.querySelector('#maindivcanvas'),
+                mdcanvas = document.querySelector('#maindiv'),
+                overaldesc = document.querySelector('#overaldesc'),
+                secdiv = document.querySelector('#secdiv'),
+                cn = document.querySelector('#container'),
+                body = document.getElementsByTagName("body"),
+                root = document.getElementsByTagName('*'),
+                CanvWidth = 1,
+                _btngwt = 0;
+            localStorage.setItem("CanvWidth", `${CanvWidth}`);
+            console.log(ww, wh);
+
+
+            if (ww <= 350) {
+                img.width = ww * 0.95;
+                if (wh <= 250) {
+                    img.height = wh / 1.4;
+                }
+                img.height = wh / 2;
+                canvas.width = img.width - 2 * CanvWidth;
+                canvas.height = img.height - 2 * CanvWidth;
+                _btngwt = img.width;
+                runspec(btng, ff, mdcanvas, overaldesc, secdiv, canvas, img, cl, cn, 12, 20, _btngwt);
+            }
+            if (ww > 350 && ww <= 600) {
+                _btngwt = ww * 0.95;
+                img.width = _btngwt;
+                if (wh <= 600) {
+                    img.width = _btngwt;
+                    img.height = wh / 2;
+
+                } else if (wh <= 650) {
+                    img.width = _btngwt;
+                    img.height = wh / 2.5;
+                } else if (wh > 650) {
+                    img.height = wh / 2;
+                }
+                canvas.width = img.width - 2 * CanvWidth;
+                canvas.height = img.height - 2 * CanvWidth;
+                runspec(btng, ff, mdcanvas, overaldesc, secdiv, canvas, img, cl, cn, 15, 25, _btngwt);
+            } else if (ww > 600 && ww <= 1000) {
+                if (wh <= 1000) {
+                    _btngwt = (ww / 2) + (ww * 0.95) / 2;
+                    sf.style.width = ww / 2 + 'px';
+                    sf.style.height = wh / 2 + 'px';
+                    img.width = ww * 0.95 / 2;
+                    img.height = wh * 0.75;
+
+                } else {
+                    _btngwt = ww * 0.95;
+                    img.width = _btngwt;
+                    img.height = wh / 1.4;
+                    cl.style.height = 45 + 'px';
+                    cn.style.height = 100 + 'px';
+                }
+                canvas.width = img.width - 2 * CanvWidth;
+                canvas.height = img.height - 2 * CanvWidth;
+                runspec(btng, ff, mdcanvas, overaldesc, secdiv, canvas, img, cl, cn, 30, 50, _btngwt);
+            } else if (ww > 1000) {
+                _btngwt = ww * 0.95;
+                img.width = _btngwt;
+                img.height = wh / 1.5;
+                canvas.width = img.width - 2 * CanvWidth;
+                canvas.height = img.height - 2 * CanvWidth;
+                runspec(btng, ff, mdcanvas, overaldesc, secdiv, canvas, img, cl, cn, 15, 25, _btngwt);
+                cl.style = `width:${ww/2+'px'};height:100px`;
+                cn.style = `width:${600+'px'};height:100px`;
+            }
+
+            function runspec(btng, ff, mdcanvas, overaldesc, secdiv, canvas, img, cl, cn, btngtop, btnght, btngwt) {
+                btng.style.top = (img.height + btngtop) + 'px';
+                btng.style.height = btnght + 'px';
+                btng.style.width = btngwt + 'px';
+                ff.style.width = img.width + 'px';
+                mdcanvas.style = `width:inherit;height:${img.height+'px'}`;
+                overaldesc.style = `width:inherit;height:${img.height+btngtop+btnght+'px'}`;
+                secdiv.style = 'width:inherit;height:inherit';
+                ff.style.height = overaldesc.style.height;
+                cl.style = `width:${img.width+'px'};height:45px`;
+                cn.style = `width:${img.width+'px'};`;
+                localStorage.setItem('maxCanvWt', `${canvas.width}`);
+                localStorage.setItem('maxCanvHt', `${canvas.height}`);
+                localStorage.setItem('maxImgWt', `${img.width}`);
+                localStorage.setItem('maxImgHt', `${img.height}`);
+            }
+        </script>
+</body>
+
+<script type="module" src="Main.js"></script>
+<script type="module" src="SubProject1.js"></script>
+<script type="module" src="Import.js"></script>
+
+</html>

@@ -1,0 +1,47 @@
+#pag {
+    margin-top: 60%;
+    position: fixed;
+}
+
+#maindiv {
+    position: absolute;
+    z-index: 5;
+}
+
+#myimg {
+    z-index: 3;
+}
+
+#colorsliders {
+    position: fixed;
+    font-family: cursive;
+    width: 500px;
+}
+
+
+/* JS 
+
+const btnd = {
+    [0]: {
+        'topd': btns[0].offsetTop,
+        'bottomd': btns[0].offsetTop - Number(getComputedStyle(btns[0]).height.slice(0, -2)),
+        'leftd': btns[0].offsetLeft,
+        'rightd': btns[0].offsetLeft - Number(getComputedStyle(btns[0]).bottom.slice(0, -2)),
+    },
+
+    [1]: {
+        'topd': btns[1].offsetTop,
+        'bottomd': btns[1].offsetTop - Number(getComputedStyle(btns[1]).height.slice(0, -2)),
+        'leftd': btns[1].offsetLeft,
+        'rightd': btns[1].offsetLeft - Number(getComputedStyle(btns[1]).bottom.slice(0, -2)),
+    },
+
+    [2]: {
+        'topd': btns[2].offsetTop,
+        'bottomd': btns[2].offsetTop - Number(getComputedStyle(btns[2]).height.slice(0, -2)),
+        'leftd': btns[2].offsetLeft,
+        'rightd': btns[2].offsetLeft - Number(getComputedStyle(btns[2]).bottom.slice(0, -2)),
+    }
+}
+
+*/
