@@ -5,16 +5,6 @@ import { dragresize } from "./Drag.js";
 window.onload = function() {
     sessionStorage.clear()
 
-    function message() {
-        return " and imported into Project-2/Main/Main.js"
-    }
-
-    console.log(drawlines.message() + message());
-    console.log(drawcanvas.message() + message());
-    console.log(dragresize.message() + message());
-
-
-
     var body = document.getElementById('body'), //0
         canvas = document.getElementById('maindivcanvas'), //1
         ctx = canvas.getContext('2d'), //2
@@ -60,18 +50,14 @@ window.onload = function() {
     ranges[1].style.backgroundColor = prgb;
 
     var image = {
-            overaldesc: document.getElementById('overaldesc'),
-            secdiv: document.getElementById('secdiv'),
-            img: document.getElementById('myimg')
-        }
-        //content, divcolor, divcolor2, divcolor3, top, left, width, height, padTopp, padBott, padTop, padBot
-
-
+        overaldesc: document.getElementById('overaldesc'),
+        secdiv: document.getElementById('secdiv'),
+        img: document.getElementById('myimg')
+    }
 
     List = [body, canvas, ctx, para, para2, para3, pass, //0 - 6
         Root, time, color, canvWidth, lineWidth, Radius //7 - 12
     ];
-
 
     function arrangeCanvas(canvas, ctx, color, canvWidth, lineWidth, num, width, height, opacity) {
         drawcanvas.drawCanvas(canvas, canvWidth, color, width, height, opacity);
@@ -84,7 +70,6 @@ window.onload = function() {
 
     dragresize.dragElement(maindiv, canvas, Radius, image, CanvWidth, offsetVal);
     arrangeCanvas(List[1], List[2], List[9], List[10], List[11], num, canvas.width, canvas.height, opacity);
-
 
     label1.innerHTML = opacity / 100;
     spec.innerHTML = num;
@@ -108,19 +93,7 @@ window.onload = function() {
         spec.innerHTML = range2.value;
     }
 
-    // fl.style.left = (fl.offsetLeft + 100) + 'px';
-
-
     window.onmouseup = function() { arrangeCanvas(List[1], List[2], color, List[10], List[11], num, canvas.width, canvas.height); }
-
-
-    // window.onresize = function() {
-    //     console.log(window.innerWidth, window.innerHeight, window.outerWidth, window.outerHeight);
-    //     td.style.left = (window.innerWidth - (window.innerWidth / 3.5)) + 'px';
-    //     flexs.style.left = (window.innerWidth - (window.innerWidth / 3)) + 'px';
-    //     colorsliders.style.marginTop = `${(window.innerHeight - (window.innerHeight / 5))}` + 'px';
-
-    // }
 
     imgwidth.value = image.img.width;
     imgheight.value = image.img.height;
@@ -164,7 +137,7 @@ window.onload = function() {
         if (imgheight.value <= maxImgHt) {
             if (imgheight.value == maxImgHt) {
                 imgheight.style.color = 'grey';
-            } else if (imgheight.value < maxImgHt && imgheight.value > 100) {
+            } else if ((imgheight.value < maxImgHt) && (imgheight.value > 100)) {
                 imgheight.style.color = 'black';
             } else {
                 imgheight.style.color = 'red';
@@ -190,7 +163,6 @@ window.onload = function() {
         }
     };
 
-
     canvwt.oninput = function() {
         if (canvwt.value <= maxCanvWt) {
             if (canvwt.value <= (image.img.width - CanvWidth)) {
@@ -206,6 +178,7 @@ window.onload = function() {
             }
         }
     }
+
     canvht.oninput = function() {
         if (canvht.value <= maxCanvHt) {
             if (canvht.value <= (image.img.height - CanvWidth)) {
@@ -221,29 +194,4 @@ window.onload = function() {
             }
         }
     }
-    canvht.onchange = function() { console.log('changed') }
-
-    // function show() {
-    //     console.log(image.img.width, image.img.height, canvas.width, canvas.height);
-    //     console.log(sessionStorage);
-    //     console.log(localStorage);
-    //     setTimeout(show, 5000);
-    // }
-
-    // show();
-
-
-
-    window.onclick = function(e) {
-        let x = e.clientX;
-        let y = e.clientY;
-        console.log(x, y)
-        console.log(document.elementFromPoint(x, y))
-        console.log(document.elementsFromPoint(x, y))
-    }
-    var button = document.getElementsByTagName('.btn-fill');
-    for (let i = 0; i < button.length; i++) {
-        button[i].onclick = console.log("clicked");
-    }
-    // window.addEventListener('keydown', (e) => { if (e.shiftKey == false && e.ctrlKey == false && e.altKey == false && e.code == "Enter") { console.log(e.key) } })
 }

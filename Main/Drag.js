@@ -13,7 +13,7 @@ class DragResize {
             setposy;
         sessionStorage.setItem('boundaries', 'applicable');
         sessionStorage.setItem('curFunc', 'noFunc');
-        sessionStorage.setItem('value', value)
+        sessionStorage.setItem('value', value);
         if (document.getElementById(element.id + 'canvas')) {
             /* if present, the header is where you move the DIV from:*/
             document.getElementById(element.id + 'canvas').onmousedown = dragMouseDown;
@@ -24,7 +24,7 @@ class DragResize {
 
         function dragMouseDown(e) {
             e = e || window.event;
-            e.preventDefault();
+            entDefault();
             // get the mouse cursor position at startup:
             pos3 = e.clientX;
             pos4 = e.clientY;
@@ -58,7 +58,6 @@ class DragResize {
                 X2minus = (element.offsetLeft + Number(elmnt.width) - Radius),
                 Y2plus = (element.offsetTop + Number(elmnt.height)),
                 Y2minus = (element.offsetTop + Number(elmnt.height) - Radius);
-
 
             //some conditions:
             if (sessionStorage.getItem('boundaries') == 'applicable') {
@@ -105,7 +104,6 @@ class DragResize {
                 }
             }
 
-
             window.onclick = function() {
                 // console.log(setposx, setposy, X1minus, X1plus, X2minus, X2plus, Y1minus, Y1plus, Y2minus, Y2plus)
             }
@@ -114,6 +112,8 @@ class DragResize {
                 // set the element's new position:
                 element.style.top = (element.offsetTop - pos2) + "px";
                 element.style.left = (element.offsetLeft - pos1) + "px";
+                element.style.height = (image.img.height - element.style.top.slice(0, -2)) + 'px';
+                element.style.width = (image.img.width - element.style.left.slice(0, -2)) + 'px';
                 sessionStorage.setItem('boundaries', 'non-applicable');
                 if (element.offsetLeft - offsetval <= 0) {
                     element.style.left = (element.offsetLeft + offsetval) + 'px';
@@ -174,9 +174,6 @@ class DragResize {
             }
         }
 
-
-
-
         function closeDragElement() {
             sessionStorage.removeItem('sx');
             sessionStorage.removeItem('sy');
@@ -191,9 +188,6 @@ class DragResize {
             existX = 1;
             existY = 1;
         }
-    }
-    message() {
-        return "Object dragresize exported from Project-2/Main/Drag.js";
     }
 }
 

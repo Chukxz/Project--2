@@ -35,12 +35,11 @@ const btns = document.querySelectorAll(".-btn"),
     btnFill = document.querySelectorAll('.btn-fill'),
     btnPlace = document.querySelectorAll('.-btn-place'),
     button = document.getElementsByTagName('button'),
-    btng = document.querySelector('#btngroup');
+    del = document.querySelector('#delete');
 
-console.log(btng.offsetTop, '--', btng.offsetLeft);
+btns[1].style.backgroundColor = '#4CAF50';
 
 btnFill[1].style.opacity = 0.5;
-
 
 for (let i = 0; i < btns.length; i++) {
     wd[i] = window.getComputedStyle(btnTxt[i]).width;
@@ -50,15 +49,12 @@ for (let i = 0; i < btns.length; i++) {
     offsetL = btnTxt[i].offsetLeft;
     btnTxt[i].style.left = (Number(twd[i].slice(0, -2)) / 2) - (Number(wd[i].slice(0, -2)) / 2) - offsetL + 'px';
 
-    console.log('btn-txt width: ', wd[i], '\n', 'btn-txt height: ', hg[i]);
-    console.log('btn width: ', twd[i], '\n', 'btn height: ', thg[i]);
-
     btnPlace[i].style.width = twd[i];
     btnPlace[i].style.height = thg[i];
 
     btnPlace[i].style.left = button[i].offsetLeft + 'px';
 
-    btnPlace[i].addEventListener('mouseover', function(e) {
+    btnPlace[i].addEventListener('mouseover', {} = (e) => {
         const x = e.clientX - btns[i].offsetLeft;
         const y = e.offsetY - btns[i].offsetTop;
 
@@ -75,23 +71,84 @@ for (let i = 0; i < btns.length; i++) {
         btnFill[i].style.height = '0px';
         btnTxt[i].style.color = 'rgb(128,128,128)';
     })
-}
 
+    btnPlace[i].addEventListener('touchstart', {} = (e) => {
+        const x = e.clientX - btns[i].offsetLeft;
+        const y = e.offsetY - btns[i].offsetTop;
+
+        btnFill[i].style.width = '1000px';
+        btnFill[i].style.height = '1000px';
+
+        btnFill[i].style.top = y + 'px';
+        btnFill[i].style.left = x + 'px';
+
+        btnTxt[i].style.color = 'magenta';
+        console.log('started');
+    }, { 'passive': true })
+
+    btnPlace[i].addEventListener('touchend', {} = () => {
+        btnFill[i].style.width = '0px';
+        btnFill[i].style.height = '0px';
+        btnTxt[i].style.color = 'rgb(128,128,128)';
+        console.log('ended');
+    }, { 'passive': true })
+}
 
 
 function update() {
     if (localStorage.getItem('image') === 'absent') {
         btns[0].style.backgroundColor = 'red';
         btnTxt[0].style.backgroundColor = 'red';
-
         btnFill[0].style.opacity = 0;
+        btnPlace[0].onclick = function() {
+            var runCount = 0;
+
+            function exec() {
+                let mytimeout = setTimeout(exec, 50);
+                if (runCount < 4) {
+                    runCount++;
+                    if (runCount % 2 === 0) {
+                        btns[0].style.opacity = 1;
+                    } else {
+                        btns[0].style.opacity = 0.3;
+                    }
+                    return runCount;
+                } else {
+                    clearTimeout(mytimeout);
+                }
+            }
+
+            exec();
+        }
 
         btnTxt[1].innerHTML = 'Add Image(s)';
-        btns[1].style.backgroundColor = '#4CAF50';
+
+        del.style.display = 'none';
+        btnPlace[1].style.width = twd[1];
 
         btns[2].style.backgroundColor = 'red';
         btnTxt[2].style.backgroundColor = 'red';
         btnFill[2].style.opacity = 0;
+        btnPlace[2].onclick = function() {
+            var runCount = 0;
+
+            function exec() {
+                let mytimeout = setTimeout(exec, 50);
+                if (runCount < 4) {
+                    runCount++;
+                    if (runCount % 2 === 0) {
+                        btns[2].style.opacity = 1;
+                    } else {
+                        btns[2].style.opacity = 0.3;
+                    }
+                    return runCount;
+                } else {
+                    clearTimeout(mytimeout);
+                }
+            }
+            exec();
+        }
+
         //Image
         btnPlace[1].onclick = function() {
             importData();
@@ -102,20 +159,27 @@ function update() {
         btnTxt[0].style.backgroundColor = '#4CAF50';
         btnFill[0].style.opacity = 0.5;
 
-        btnTxt[1].innerHTML = "Delete Image(s)";
+        btnTxt[1].innerHTML = "Submit";
+
+        btnPlace[1].style.width = (twd[1].slice(0, -4) - 20) + 'px';
+        del.style.display = 'inline';
 
         btns[2].style.backgroundColor = '#4CAF50';
         btnTxt[2].style.backgroundColor = '#4CAF50';
         btnFill[2].style.opacity = 0.5;
 
-
         //Image
-        btnPlace[1].onclick = function() {
+
+        del.onclick = function() {
             importData();
         }
 
-        var num = 0;
+        btnPlace[1].onclick = function() {
+            console.log('Data sent successfully');
+        }
 
+
+        var num = 0;
 
         //Left
         btnPlace[0].onclick = function() {
@@ -138,7 +202,6 @@ function update() {
 }
 update();
 
-
 function importData() {
     if (localStorage.getItem('image') === 'absent') {
         let input = document.createElement('input');
@@ -151,10 +214,9 @@ function importData() {
             for (let i = 0; i < files.length; i++) {
                 images[i] = URL.createObjectURL(files[i]);
             }
+            image.style.visibility = 'visible';
             image.src = images[0];
-
             localStorage.setItem('image', 'present');
-            console.log(files);
             update();
             return images;
         }
@@ -163,6 +225,7 @@ function importData() {
         for (let i = 0; i < images.length; i++) {
             images[i] = '';
             image.removeAttribute('src');
+            image.style.visibility = 'hidden';
             localStorage.setItem('image', 'absent');
             update();
         }
