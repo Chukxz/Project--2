@@ -60,13 +60,16 @@ for (let i = 0; i < btns.length; i++) {
 
         btnFill[i].style.width = '1000px';
         btnFill[i].style.height = '1000px';
+        btnFill[i].style.top = y + 'px';
+        btnFill[i].style.left = x + 'px';
+        btnTxt[i].style.color = 'magenta';
+    })
+    btnPlace[i].addEventListener('mouseout', {} = (e) => {
+        const x = e.clientX - btns[i].offsetLeft;
+        const y = e.offsetY - btns[i].offsetTop;
 
         btnFill[i].style.top = y + 'px';
         btnFill[i].style.left = x + 'px';
-
-        btnTxt[i].style.color = 'magenta';
-    })
-    btnPlace[i].addEventListener('mouseout', {} = () => {
         btnFill[i].style.width = '0px';
         btnFill[i].style.height = '0px';
         btnTxt[i].style.color = 'rgb(128,128,128)';
@@ -78,22 +81,22 @@ for (let i = 0; i < btns.length; i++) {
 
         btnFill[i].style.width = '1000px';
         btnFill[i].style.height = '1000px';
+        btnFill[i].style.top = y + 'px';
+        btnFill[i].style.left = x + 'px';
+        btnTxt[i].style.color = 'magenta';
+    }, { 'passive': true })
+
+    btnPlace[i].addEventListener('touchend', {} = (e) => {
+        const x = e.clientX - btns[i].offsetLeft;
+        const y = e.offsetY - btns[i].offsetTop;
 
         btnFill[i].style.top = y + 'px';
         btnFill[i].style.left = x + 'px';
-
-        btnTxt[i].style.color = 'magenta';
-        console.log('started');
-    }, { 'passive': true })
-
-    btnPlace[i].addEventListener('touchend', {} = () => {
         btnFill[i].style.width = '0px';
         btnFill[i].style.height = '0px';
         btnTxt[i].style.color = 'rgb(128,128,128)';
-        console.log('ended');
     }, { 'passive': true })
 }
-
 
 function update() {
     if (localStorage.getItem('image') === 'absent') {
