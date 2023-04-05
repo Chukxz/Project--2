@@ -113,7 +113,6 @@ window.onload = function() {
 
         offsetL;
 
-
     //Add images
     localStorage.setItem('image', 'absent');
 
