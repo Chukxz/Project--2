@@ -538,7 +538,7 @@ window.onload = function() {
                     //check if plot was on previously existing plot
                     for (let i = 0; i < plotid; i++) {
                         if (plotList[i].status === 'active') {
-                            if (Math.abs(plotList[i].x - xPoint) <= 2 && Math.abs(plotList[i].y - yPoint) <= 2) {
+                            if (Math.abs(plotList[i].x - xPoint) <= 5 && Math.abs(plotList[i].y - yPoint) <= 5) {
                                 is_on_existing_point = true;
                                 repeat_id = i;
                             }
