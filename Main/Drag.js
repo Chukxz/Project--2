@@ -60,11 +60,10 @@ class DragResize {
                 Y2minus = (element.offsetTop + Number(elmnt.height) - Radius);
 
             //some conditions:
-            if (sessionStorage.getItem('boundaries') == 'applicable') {
+            if (sessionStorage.getItem('boundaries') === 'applicable') {
                 if ((setposx >= X1minus) && (setposx <= X1plus)) {
                     if ((setposy >= Y1minus) && (setposy <= Y1plus)) {
                         value = 'A';
-
                     } else if ((setposy >= Y2minus) && (setposy <= Y2plus)) {
                         value = 'B';
                     } else {
@@ -90,71 +89,88 @@ class DragResize {
                         value = 'l';
                     }
                 }
-                sessionStorage.setItem('value', value)
+                sessionStorage.setItem('value', value);
             }
 
-            if (pos3 > 0 && pos4 > 0) {
+            if (pos3 > 0 && pos4 > 0 && sessionStorage.getItem('draggable') === 'applicable') {
                 if (value != undefined) {
                     sessionStorage.setItem('boundaries', 'non-applicable');
                     sessionStorage.setItem('curFunc', 'execResize');
                     execResize(elmnt, element, value, offsetval);
                 } else {
-                    sessionStorage.setItem('curFunc', 'execDrag')
-                    execDrag(element, elmnt, offsetval)
+                    sessionStorage.setItem('curFunc', 'execDrag');
+                    execDrag(element, elmnt, offsetval);
                 }
             }
 
-            window.onclick = function() {
-                // console.log(setposx, setposy, X1minus, X1plus, X2minus, X2plus, Y1minus, Y1plus, Y2minus, Y2plus)
-            }
+            // window.onclick = function() {
+            //     // console.log(setposx, setposy, X1minus, X1plus, X2minus, X2plus, Y1minus, Y1plus, Y2minus, Y2plus)
+            // }
 
             function execDrag(element, elmnt, offsetval) {
-                // set the element's new position:
-                element.style.top = (element.offsetTop - pos2) + "px";
-                element.style.left = (element.offsetLeft - pos1) + "px";
-                element.style.height = (image.img.height - element.style.top.slice(0, -2)) + 'px';
-                element.style.width = (image.img.width - element.style.left.slice(0, -2)) + 'px';
-                sessionStorage.setItem('boundaries', 'non-applicable');
-                if (element.offsetLeft - offsetval <= 0) {
-                    element.style.left = (element.offsetLeft + offsetval) + 'px';
-                } else if (element.offsetTop - offsetval <= 0) {
-                    element.style.top = (element.offsetTop + offsetval) + 'px';
-                } else if (element.offsetLeft - offsetval + elmnt.width >= image.img.width) {
-                    element.style.left = (image.img.width - offsetval - elmnt.width + CanvWidth) + 'px';
-                } else if (element.offsetTop - offsetval + elmnt.height >= image.img.height) {
-                    element.style.top = (image.img.height - offsetval - elmnt.height + CanvWidth) + 'px';
+                if (value === undefined) {
+                    // set the element's new position:
+                    element.style.top = (element.offsetTop - pos2) + "px";
+                    element.style.left = (element.offsetLeft - pos1) + "px";
+                    element.style.height = (image.img.height - element.style.top.slice(0, -2)) + 'px';
+                    element.style.width = (image.img.width - element.style.left.slice(0, -2)) + 'px';
+                    sessionStorage.setItem('boundaries', 'non-applicable');
+                    if (element.offsetLeft - offsetval <= 0) {
+                        element.style.left = (element.offsetLeft + offsetval) + 'px';
+                    } else if (element.offsetTop - offsetval <= 0) {
+                        element.style.top = (element.offsetTop + offsetval) + 'px';
+                    } else if (element.offsetLeft - offsetval + elmnt.width >= image.img.width) {
+                        element.style.left = (image.img.width - offsetval - elmnt.width + CanvWidth) + 'px';
+                    } else if (element.offsetTop - offsetval + elmnt.height >= image.img.height) {
+                        element.style.top = (image.img.height - offsetval - elmnt.height + CanvWidth) + 'px';
+                    }
                 }
             }
 
             function execResize(elmnt, element, value, offsetval) {
-                if (value == 'B') {
-                    signY = -1, existY = 0;
+                //if value === 'A' it is left as it is.
+                if (value === 'B') {
+                    signY = -1;
+                    existY = 0;
                 }
-                if (value == 'C') {
-                    signX = -1, existX = 0;
+                if (value === 'C') {
+                    signX = -1;
+                    existX = 0;
                 }
-                if (value == 'D') {
-                    signX = -1, existX = 0;
-                    signY = -1, existY = 0;
+                if (value === 'D') {
+                    signX = -1;
+                    existX = 0;
+                    signY = -1;
+                    existY = 0;
                 }
-                if (value == 'i') {
-                    existY = 0, signY = existY;
+                if (value === 'i') {
+                    existY = 0;
+                    signY = existY;
                 }
-                if (value == 'j') {
-                    existX = 0, signX = existX;
+                if (value === 'j') {
+                    existX = 0;
+                    signX = existX;
                 }
-                if (value == 'k') {
-                    signX = -1, existX = 0;
-                    existY = 0, signY = existY;
+                if (value === 'k') {
+                    signX = -1;
+                    existX = 0;
+                    existY = 0;
+                    signY = existY;
                 }
-                if (value == 'l') {
-                    existX = 0, signX = existX;
-                    signY = -1, existY = 0;
+                if (value === 'l') {
+                    existX = 0;
+                    signX = existX;
+                    signY = -1;
+                    existY = 0;
                 }
+
                 elmnt.width = wd + (pos1 * signX);
                 element.style.left = (element.offsetLeft - (pos1 * existX)) + 'px';
                 elmnt.height = hg + (pos2 * signY);
                 element.style.top = (element.offsetTop - (pos2 * existY)) + 'px';
+                wd = elmnt.width;
+                hg = elmnt.height;
+
                 if (element.offsetLeft - offsetval < 0) {
                     elmnt.width = wd;
                     element.style.left = (element.offsetLeft + offsetval) + 'px';
