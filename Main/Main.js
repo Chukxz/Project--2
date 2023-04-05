@@ -602,21 +602,22 @@ window.onload = function() {
     range2.value = num;
 
     range1.oninput = function() {
-        label1.innerHTML = range1.value / 100;
         opacity = range1.value / 100;
+        label1.innerHTML = opacity;
     }
-    inputs.oninput = function() {
-        color = inputs.value;
-        arrangeCanvas(canvas, ctx, color, canvWidth, lineWidth, num, canvas.width, canvas.height, opacity);
+
+    range2.oninput = function() {
+        num = range2.value;
+        spec.innerHTML = num;
     }
 
     colorsliders.oninput = function() {
         arrangeCanvas(canvas, ctx, color, canvWidth, lineWidth, num, canvas.width, canvas.height, opacity);
     }
 
-    range2.oninput = function() {
-        num = range2.value;
-        spec.innerHTML = range2.value;
+    inputs.oninput = function() {
+        color = inputs.value;
+        arrangeCanvas(canvas, ctx, color, canvWidth, lineWidth, num, canvas.width, canvas.height, opacity);
     }
 
     function packageplot() {
