@@ -382,7 +382,6 @@ window.onload = function() {
     }, { 'passive': true })
 
     canvas.addEventListener('touchstart', {} = (e) => {
-        e.preventDefault()
         if (sessionStorage.getItem('draggable') === 'non-applicable') {
             xOffset = maindiv.offsetLeft + canvas.offsetLeft;
             yOffset = maindiv.offsetTop + canvas.offsetTop;
@@ -390,7 +389,7 @@ window.onload = function() {
             yPoint = e.touches[0].clientY - yOffset;
             initiate(xPoint, yPoint);
         }
-    }, { 'passive':false })
+    }, { 'passive': true })
 
     canvas.addEventListener('touchmove', {} = (e) => {
         e.preventDefault()
@@ -401,7 +400,7 @@ window.onload = function() {
             yPoint = e.touches[0].clientY - yOffset;
             intermediate(xPoint, yPoint);
         }
-    }, { 'passive':false })
+    }, { 'passive': false })
 
     canvas.addEventListener('touchend', {} = (e) => {
         e.preventDefault();
