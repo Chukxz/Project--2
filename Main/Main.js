@@ -529,7 +529,7 @@ window.onload = function() {
                     lineid++;
 
                 }
-                //no line was drawn
+                //line was not drawn
                 else if (cur_id.line === null) {
                     plotList[cur_id.point].status = 'disabled';
                     cur_id.point = null;
