@@ -606,7 +606,8 @@ window.onload = function() {
         opacity = range1.value / 100;
     }
     inputs.oninput = function() {
-        color = inputs.value
+        color = inputs.value;
+        arrangeCanvas(canvas, ctx, color, canvWidth, lineWidth, num, canvas.width, canvas.height, opacity);
     }
 
     colorsliders.oninput = function() {
