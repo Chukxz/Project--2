@@ -17,10 +17,6 @@ body {
     cursor: pointer;
 }
 
-input[type="number"] {
-    background-color: white;
-}
-
 #overaldesc {
     position: fixed;
 }
